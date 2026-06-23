@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 模块1：认证与用户管理
- * 开发者：梁倩倩 (20232053)
+ * 开发者：黄秋月 (20232074)
  * 认证接口：注册 / 登录 / 修改密码。
  */
 @Slf4j
