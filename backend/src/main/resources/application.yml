@@ -1,0 +1,106 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    max-http-form-post-size: 25MB
+
+spring:
+  application:
+    name: doc-summary-kb
+  datasource:
+    url: jdbc:mysql://localhost:3306/doc_summary?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+      enabled: true
+  mvc:
+    async:
+      request-timeout: 60000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      id-type: AUTO
+      logic-delete-field: null
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:mapper/**/*.xml
+
+mini-max:
+  api-key: sk-api-bA_rBZmV2jYSKQitc-PH2JKO9FyLvtUJ1Ty6_0D-4aLSRV2ZvqYLNyn1OhcxSDs4fHu-EIMs0Nx2-ki0k3EUD66xsWOA7Dz4ikVsZ3PIY_KI2i3nQ1CCI1M
+  base-url: https://api.minimaxi.com/v1
+  model: MiniMax-M3
+  connect-timeout-ms: 10000
+  read-timeout-ms: 60000
+  max-retries: 1
+
+deepseek:
+  api-key: sk-f2ec5de8f9d6438d81345590ea664199
+  base-url: https://api.deepseek.com/v1
+  model: deepseek-chat
+
+# AI 模型配置：支持多模型切换
+ai:
+  # 当前激活的默认模型（运行时可通过 POST /api/models/switch 切换）
+  active-model: MiniMax-M3
+  models:
+    - name: MiniMax-M3
+      provider: MiniMax
+      description: MiniMax M3 模型，支持高质量问答与流式输出
+      supports-stream: true
+    - name: gpt-4o
+      provider: OpenAI
+      description: GPT-4o，适用于复杂推理与长文档理解
+      supports-stream: true
+    - name: gpt-3.5-turbo
+      provider: OpenAI
+      description: GPT-3.5 Turbo，快速响应，低成本
+      supports-stream: true
+    - name: deepseek-v4-pro
+      provider: DeepSeek
+      description: DeepSeek V4 Pro，支持代码生成与复杂推理，上下文 1M
+      supports-stream: true
+    - name: deepseek-chat
+      provider: DeepSeek
+      description: DeepSeek Chat，快速对话与文档问答
+      supports-stream: true
+
+logging:
+  level:
+    root: INFO
+    com.example.dockb: INFO
+    com.baomidou.mybatisplus: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+
+app:
+  upload-dir: ${user.dir}/uploads
+  chunk-size: 1000
+  jwt:
+    # 必须 ≥ 32 字符，生产环境请换掉
+    secret: doc-summary-kb-jwt-secret-key-2024-change-in-production
+    # 7 天
+    expiration-ms: 604800000
+  search:
+    max-candidates: 30
+    snippet-radius: 80
+  async:
+    core-pool-size: 2
+    max-pool-size: 4
+    queue-capacity: 50
+  cors:
+    allowed-origins:
+      - http://localhost:5173
+      - http://127.0.0.1:5173
