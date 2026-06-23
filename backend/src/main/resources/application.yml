@@ -1,11 +1,13 @@
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: /
   tomcat:
     max-http-form-post-size: 25MB
 
 spring:
+  config:
+    import: optional:file:./secrets.properties
   application:
     name: doc-summary-kb
   datasource:
@@ -39,7 +41,7 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
 
 mini-max:
-  api-key: sk-api-bA_rBZmV2jYSKQitc-PH2JKO9FyLvtUJ1Ty6_0D-4aLSRV2ZvqYLNyn1OhcxSDs4fHu-EIMs0Nx2-ki0k3EUD66xsWOA7Dz4ikVsZ3PIY_KI2i3nQ1CCI1M
+  # api-key 请配置在 secrets.properties 中（参考 secrets.properties.example）
   base-url: https://api.minimaxi.com/v1
   model: MiniMax-M3
   connect-timeout-ms: 10000
@@ -47,7 +49,7 @@ mini-max:
   max-retries: 1
 
 deepseek:
-  api-key: sk-f2ec5de8f9d6438d81345590ea664199
+  # api-key 请配置在 secrets.properties 中（参考 secrets.properties.example）
   base-url: https://api.deepseek.com/v1
   model: deepseek-chat
 

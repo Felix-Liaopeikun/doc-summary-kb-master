@@ -25,6 +25,7 @@ target/
 .env.*
 application-local.yml
 application-prod.yml
+backend/secrets.properties
 
 # ---- 日志 ----
 *.log
